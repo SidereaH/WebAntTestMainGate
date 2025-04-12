@@ -1,0 +1,113 @@
+version: '3.8'
+
+services:
+  postgres_container_scitech:
+    image: postgres:15
+    container_name: postgres_container_scitech
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-data:/data/postgres
+      - ./initdb:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - homerep-network
+#    restart: unless-stopped
+
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: pgadmin_container_authtest
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+#      PGADMIN_DEFAULT_PASSWORD: admin
+#    volumes:
+#      - pgadmin-data:/var/lib/pgadmin
+#    ports:
+#      - "8008:80"
+#    networks:
+#      - homerep-network
+#    depends_on:
+#      - postgres
+#    restart: unless-stopped
+
+  auth-service:
+    image: aliquamsiderea/scitech_auth:0.1.0
+    container_name: auth_container
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitech_auth
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - HOMEREP_SECRET=yo78$$dontCrackPleaseASdujisdufasbasu
+      - HOMEREP_LIFETIME=600000
+    ports:
+      - "8082:8082"
+    networks:
+      - homerep-network
+    depends_on:
+      - postgres_container_scitech
+    restart: unless-stopped
+  scitech-userservice:
+    image: aliquamsiderea/scitech_userservice:0.1.1
+    container_name: scitech-userservice
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitech_userservice
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+    networks:
+      - homerep-network
+    depends_on:
+      - postgres_container_scitech
+    restart: unless-stopped
+    #парсер
+#  scitech-newsparser:
+#    image: aliquamsiderea/scitech_newsparser:0.1.1
+#    #    build: .
+#    container_name: scitech-newsparser
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitech_newsparser
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+#      - SERVER_PORT=8084
+#    ports:
+#      - "8084:8084"
+#      - "4444:4444"
+#    networks:
+#      - homerep-network
+#    depends_on:
+#      - postgres_container_scitech
+#    restart: unless-stopped
+
+  scitech-newsservice:
+    image: aliquamsiderea/scitech_newsservice:0.1.2
+    #    build: .
+    container_name: scitech-newsservice
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitech_newsservice
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SERVER_PORT=8083
+    ports:
+      - "8083:8083"
+    networks:
+      - homerep-network
+    depends_on:
+      - postgres_container_scitech
+    restart: unless-stopped
+
+
+networks:
+  homerep-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
