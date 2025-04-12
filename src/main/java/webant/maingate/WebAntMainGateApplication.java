@@ -1,8 +1,7 @@
-package homerep.homerepoauth;
+package webant.maingate;
 
-import homerep.homerepoauth.models.User;
-import homerep.homerepoauth.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import webant.maingate.models.security.User;
+import webant.maingate.repositories.UserRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class HomeRepOAuthApplication {
+public class WebAntMainGateApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HomeRepOAuthApplication.class, args);
+        SpringApplication.run(WebAntMainGateApplication.class, args);
     }
 
     @Bean

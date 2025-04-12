@@ -1,4 +1,4 @@
-package homerep.homerepoauth.models;
+package webant.maingate.models.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

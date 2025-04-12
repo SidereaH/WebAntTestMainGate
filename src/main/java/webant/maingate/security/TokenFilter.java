@@ -1,7 +1,6 @@
-package homerep.homerepoauth.security;
+package webant.maingate.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.persistence.Column;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package homerep.homerepoauth.controllers;
+package webant.maingate.controllers;
 
-import homerep.homerepoauth.models.User;
-import homerep.homerepoauth.services.UserService;
+import webant.maingate.models.security.User;
+import webant.maingate.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

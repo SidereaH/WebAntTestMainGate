@@ -1,8 +1,9 @@
-package homerep.homerepoauth.controllers;
-import homerep.homerepoauth.models.*;
-import homerep.homerepoauth.repositories.RefreshTokenRepository;
-import homerep.homerepoauth.repositories.UserRepository;
-import homerep.homerepoauth.security.JwtCore;
+package webant.maingate.controllers;
+
+import webant.maingate.models.security.*;
+import webant.maingate.repositories.RefreshTokenRepository;
+import webant.maingate.repositories.UserRepository;
+import webant.maingate.security.JwtCore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package homerep.homerepoauth.config;
+package webant.maingate.config;
 
-import homerep.homerepoauth.security.TokenFilter;
-import homerep.homerepoauth.services.UserService;
+import webant.maingate.security.TokenFilter;
+import webant.maingate.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity

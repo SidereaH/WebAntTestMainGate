@@ -1,6 +1,6 @@
-package homerep.homerepoauth.repositories;
+package webant.maingate.repositories;
 
-import homerep.homerepoauth.models.User;
+import webant.maingate.models.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

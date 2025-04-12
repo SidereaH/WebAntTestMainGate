@@ -1,4 +1,4 @@
-package homerep.homerepoauth.models;
+package webant.maingate.models.security;
 
 import jakarta.persistence.*;
 import lombok.*;

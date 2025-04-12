@@ -1,8 +1,7 @@
-package homerep.homerepoauth.services;
+package webant.maingate.services;
 
-import homerep.homerepoauth.repositories.UserRepository;
-import homerep.homerepoauth.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import webant.maingate.repositories.UserRepository;
+import webant.maingate.models.security.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,10 +1,11 @@
-package homerep.homerepoauth;
+package webant.maingate;
 
-import homerep.homerepoauth.controllers.SecurityController;
+import webant.maingate.controllers.SecurityController;
 import homerep.homerepoauth.models.*;
-import homerep.homerepoauth.repositories.RefreshTokenRepository;
-import homerep.homerepoauth.repositories.UserRepository;
-import homerep.homerepoauth.security.JwtCore;
+import webant.maingate.models.security.*;
+import webant.maingate.repositories.RefreshTokenRepository;
+import webant.maingate.repositories.UserRepository;
+import webant.maingate.security.JwtCore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

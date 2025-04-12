@@ -1,11 +1,10 @@
-package homerep.homerepoauth.security;
+package webant.maingate.security;
 
 
 
-import homerep.homerepoauth.models.User;
+import webant.maingate.models.security.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
