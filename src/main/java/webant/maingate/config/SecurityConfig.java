@@ -70,7 +70,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/register", "/register/**", "/login", "/login/**", "/signin", "/signup", "/signin/**", "/signup/**").permitAll()
-                        .requestMatchers("/api/**").hasRole("ADMIN")
+                        .requestMatchers("/api/project/**").hasRole("ADMIN")
+                        .requestMatchers("/api/test/**").hasAnyRole("TEST", "ADMIN")
                         .anyRequest().permitAll())
 
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);;

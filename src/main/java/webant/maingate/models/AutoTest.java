@@ -1,25 +1,43 @@
+// AutoTest.java
 package webant.maingate.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "auto_tests")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AutoTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
+    @Column(nullable = false)
     private String name;
+
     private String description;
+
+    @Column(columnDefinition = "TEXT")
     private String testCode;
-    private String framework;
+
+    @Enumerated(EnumType.STRING)
+    private TestFramework framework;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+}
+
+enum TestFramework {
+    SELENIUM, PLAYWRIGHT, CYPRESS, REST_ASSURED, TESTNG, JUNIT
 }

@@ -38,7 +38,7 @@ services:
     image: aliquamsiderea/scitech_auth:0.1.0
     container_name: auth_container
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitech_auth
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_scitech:5432/scitec``h_auth
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
