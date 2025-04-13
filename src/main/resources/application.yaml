@@ -1,9 +1,9 @@
 spring:
   application:
-    name: HomeRepOAuth
+    name: WebAntMainGate
 
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5433/homerep_auth
+    url: jdbc:postgresql://127.0.0.1:5432/postgres_container_webant
     username: "postgres"
     password: "postgres"
     driver-class-name: org.postgresql.Driver
@@ -36,8 +36,14 @@ logging:
 #        secret: 3yYVzp5nVElAYg123uRpOMq+fzQfFQ6OgoxTKuUz9Fg=
 #        lifetime: 60000
 server:
-  port: 8082
+  port: 8081
 homerep:
   secret: "yo78$$dontCrackPlease"
   lifetime: 30000
 
+swagger-to-gherkin:
+  service:
+    url: http://localhost:8082/generate-gherkin
+git-analysis:
+  service:
+    url: http://localhost:8083/analyze
