@@ -24,21 +24,19 @@ public class Test {
 
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "test_case_id")
     private TestCase testCase;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Project project;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "auto_test_id")
     private AutoTest autoTest;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id", nullable = false)
-    private Project project;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
 }

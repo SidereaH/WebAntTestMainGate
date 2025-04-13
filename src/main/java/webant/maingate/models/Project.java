@@ -38,11 +38,11 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> members = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TestCase> testCases = new HashSet<>();
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<TestCase> testCases = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Test> tests = new HashSet<>();
+//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Test> tests = new HashSet<>();
 
     private String githubUrl;
 

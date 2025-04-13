@@ -14,6 +14,7 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 
 ENV SPRING_APPLICATION_NAME=WebAntMainGate
 ENV SERVER_PORT=8082
+ENV SERVER_ADDRESS=0.0.0.0
 
 EXPOSE 8082
 

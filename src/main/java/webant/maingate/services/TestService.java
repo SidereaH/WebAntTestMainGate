@@ -16,10 +16,15 @@ import java.util.Optional;
 public class TestService {
     private final TestRepository testRepository;
     private final ProjectRepository projectRepository;
+    private final AutoTestService autoTestService;
+    private final TestCaseService testCaseService;
 
-    public TestService(TestRepository testRepository, ProjectRepository projectRepository) {
+
+    public TestService(TestRepository testRepository, ProjectRepository projectRepository, AutoTestService autoTestService, TestCaseService testCaseService) {
         this.testRepository = testRepository;
         this.projectRepository = projectRepository;
+        this.autoTestService = autoTestService;
+        this.testCaseService = testCaseService;
     }
 
     @Transactional(readOnly = true)
@@ -33,11 +38,15 @@ public class TestService {
     }
 
     @Transactional
-    public Test save(Test test) {
-        Project project = projectRepository.findById(test.getProject().getId())
+    public Test save(Test test, Long projectId) {
+        Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
         test.setProject(project);
-        return testRepository.save(test);
+        autoTestService.save(test.getAutoTest());
+        testCaseService.save(test.getTestCase());
+        testRepository.save(test);
+
+        return test;
     }
 
     @Transactional(readOnly = true)

@@ -29,8 +29,8 @@ public class TestController {
     }
 
     @PostMapping
-    public Test createTest(@Valid @RequestBody Test test) {
-        return testService.save(test);
+    public Test createTest(@Valid @RequestBody Test test, @RequestParam Long projectId) {
+        return testService.save(test,projectId);
     }
 
     @GetMapping("/{id}")

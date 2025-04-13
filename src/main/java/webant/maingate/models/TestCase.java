@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import webant.maingate.models.TestPriority;
 
 import java.time.LocalDateTime;
 
@@ -27,10 +28,6 @@ public class TestCase {
     @Column(columnDefinition = "TEXT")
     private String gherkinCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id", nullable = false)
-    private Project project;
-
     @Enumerated(EnumType.STRING)
     private TestPriority priority;
 
@@ -40,10 +37,17 @@ public class TestCase {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy = "testCase", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Test test;
+    public TestCase(String name, String description, String gherkinCode, TestPriority priority) {
+        this.name = name;
+        this.description = description;
+        this.gherkinCode = gherkinCode;
+        this.priority = priority;
+
+    }
+
+    public TestCase(String name) {
+        this.name = name;
+    }
 }
 
-enum TestPriority {
-    CRITICAL, HIGH, MEDIUM, LOW
-}
+

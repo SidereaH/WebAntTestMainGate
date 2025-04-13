@@ -22,10 +22,10 @@ public class TestCaseController {
         return testCaseService.findAll(pageable);
     }
 
-    @GetMapping("/project/{projectId}")
-    public Page<TestCase> getTestCasesByProject(@PathVariable Long projectId, Pageable pageable) {
-        return testCaseService.findByProjectId(projectId, pageable);
-    }
+//    @GetMapping("/project/{projectId}")
+//    public Page<TestCase> getTestCasesByProject(@PathVariable Long projectId, Pageable pageable) {
+//        return testCaseService.findByProjectId(projectId, pageable);
+//    }
 
     @PostMapping
     public TestCase createTestCase(@Valid @RequestBody TestCase testCase) {

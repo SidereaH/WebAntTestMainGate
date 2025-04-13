@@ -28,16 +28,13 @@ public class TestCaseService {
         return testCaseRepository.findAll(pageable);
     }
 
-    @Transactional(readOnly = true)
-    public Page<TestCase> findByProjectId(Long projectId, Pageable pageable) {
-        return testCaseRepository.findByProjectId(projectId, pageable);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<TestCase> findByProjectId(Long projectId, Pageable pageable) {
+//        return testCaseRepository.findByProjectId(projectId, pageable);
+//    }
 
     @Transactional
     public TestCase save(TestCase testCase) {
-        Project project = projectRepository.findById(testCase.getProject().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
-        testCase.setProject(project);
         return testCaseRepository.save(testCase);
     }
 
