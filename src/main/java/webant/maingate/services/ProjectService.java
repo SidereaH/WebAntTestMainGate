@@ -28,6 +28,9 @@ public class ProjectService {
 
     @Transactional
     public Project save(Project project) {
+        User owner = userRepository.findByUsername(project.getOwner().getUsername()).orElse(null);
+        project.setOwner(owner);
+        project.addMember(project.getOwner());
         return projectRepository.save(project);
     }
 

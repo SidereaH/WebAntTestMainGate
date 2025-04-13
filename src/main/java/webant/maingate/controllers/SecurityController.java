@@ -114,4 +114,11 @@ public class    SecurityController {
         refreshTokenRepository.findByToken(refreshToken).ifPresent(refreshTokenRepository::delete);
         return ResponseEntity.ok("Logged out successfully");
     }
+    @GetMapping("/whoami")
+    public ResponseEntity<?> whoami(@RequestParam String jwt){
+        String username = jwtCore.getUserNameFromJwt(jwt);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found exception"));
+        return ResponseEntity.ok(user);
+    }
 }

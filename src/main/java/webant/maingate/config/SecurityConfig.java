@@ -101,10 +101,10 @@ public class SecurityConfig {
                                 "/api/projects/{id}",  // просмотр проектов
                                 "/api/profile/**"
                         ).authenticated()
-//                        .requestMatchers(
-//                                "/api/swagger/generate-gherkin",
-//                                "/api/git-analysis/analyze"
-//                        ).hasAnyRole("DEVELOPER", "ADMIN")
+                        .requestMatchers(
+                                "/api/swagger/generate-gherkin",
+                                "/api/git-analysis/analyze"
+                        ).hasAnyRole("DEVELOPER", "ADMIN")
 
                         .anyRequest().permitAll()
                 )

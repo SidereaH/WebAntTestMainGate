@@ -12,7 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql:  true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 # properties:
 #            hibernate:
 #           format_sql: true
@@ -38,8 +38,8 @@ logging:
 server:
   port: 8081
 homerep:
-  secret: "yo78$$dontCrackPlease"
-  lifetime: 30000
+  secret: "yo78$$dontCrackPlease456789O0aaJjJjJ567890AnDDnnDD_"
+  lifetime: 300000000
 
 swagger-to-gherkin:
   service:
