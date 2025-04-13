@@ -68,11 +68,42 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/register", "/register/**", "/login", "/login/**", "/signin", "/signup", "/signin/**", "/signup/**").permitAll()
-                        .requestMatchers("/api/project/**").hasRole("ADMIN")
-                        .requestMatchers("/api/test/**").hasAnyRole("TEST", "ADMIN")
-                        .anyRequest().permitAll())
+                        .requestMatchers(
+                                "/api/auth/signup",
+                                "/api/auth/signin",
+                                "/login",
+                                "/error",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/api/users/**",
+                                "/api/projects/**",
+                                "/api/integration/**"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                "/api/test-cases/**",
+                                "/api/auto-tests/**",
+                                "/api/tests/**",
+                                "/api/test-runs/**",
+                                "/api/materials/**"
+                        ).hasAnyRole("TESTER", "ADMIN")
+
+                        .requestMatchers(
+                                "/api/git/**",
+                                "/api/code-analysis/**",
+                                "/api/code-changes/**"
+                        ).hasAnyRole("DEVELOPER", "ADMIN")
+
+                        .requestMatchers(
+                                "/api/projects/{id}",  // просмотр проектов
+                                "/api/profile/**"
+                        ).authenticated()
+
+                        .anyRequest().permitAll()
+                )
 
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);;
         return http.build();

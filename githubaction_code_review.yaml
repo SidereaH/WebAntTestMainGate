@@ -1,0 +1,199 @@
+name: Code Review and Test Generation
+
+on:
+  push:
+    branches: [ "main", "master", "dev" ]
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai requests pygithub
+
+      - name: Analyze code and generate review
+        id: code_review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.YOUR_API_KEY }}
+          API_ENDPOINT: "https://your-api-endpoint.com/review"
+        run: |
+          import os
+          import requests
+          from github import Github
+          
+          # Получаем измененные файлы
+          g = Github(os.getenv('GITHUB_TOKEN'))
+          repo = g.get_repo(os.getenv('GITHUB_REPOSITORY'))
+          commit = repo.get_commit(os.getenv('GITHUB_SHA'))
+          files = commit.files
+          
+          # Собираем изменения для анализа
+          changes = []
+          for file in files:
+              if file.filename.endswith(('.py', '.js', '.java', '.go', '.ts')):
+                  try:
+                      content = repo.get_contents(file.filename, ref=os.getenv('GITHUB_SHA')).decoded_content.decode()
+                      changes.append({
+                          'filename': file.filename,
+                          'content': content,
+                          'patch': file.patch if file.patch else ''
+                      })
+                  except:
+                      continue
+          
+          if not changes:
+              print("No code files changed, skipping review.")
+              exit(0)
+          
+          # Формируем данные для API
+          payload = {
+              'repo': os.getenv('GITHUB_REPOSITORY'),
+              'commit': os.getenv('GITHUB_SHA'),
+              'changes': changes,
+              'action': 'review'
+          }
+          
+          # Отправляем на ваш API для анализа
+          headers = {
+              'Authorization': f'Bearer {os.getenv("API_KEY")}',
+              'Content-Type': 'application/json'
+          }
+          
+          response = requests.post(
+              os.getenv('API_ENDPOINT'),
+              json=payload,
+              headers=headers
+          )
+          
+          if response.status_code != 200:
+              raise Exception(f"API request failed: {response.text}")
+          
+          review_results = response.json()
+          print("Review results:", review_results)
+          
+          # Формируем комментарий для PR
+          comment = f"## Code Review Results\n\n{review_results.get('review', 'No review generated')}"
+          
+          # Добавляем комментарий к PR (если это PR)
+          event_path = os.getenv('GITHUB_EVENT_PATH')
+          if event_path:
+              with open(event_path, 'r') as f:
+                  event_data = json.load(f)
+              if 'pull_request' in event_data:
+                  pr_number = event_data['pull_request']['number']
+                  repo.get_pull(pr_number).create_issue_comment(comment)
+          
+          # Сохраняем результаты для следующего шага
+          with open('review_results.json', 'w') as f:
+              json.dump(review_results, f)
+
+      - name: Generate tests based on review
+        id: generate_tests
+        env:
+          API_KEY: ${{ secrets.YOUR_API_KEY }}
+          API_ENDPOINT: "https://your-api-endpoint.com/tests" # Замените на ваш API endpoint для генерации тестов
+        run: |
+          import os
+          import requests
+          import json
+          
+          # Читаем результаты ревью
+          with open('review_results.json', 'r') as f:
+              review_results = json.load(f)
+          
+          # Формируем запрос на генерацию тестов
+          payload = {
+              'repo': os.getenv('GITHUB_REPOSITORY'),
+              'commit': os.getenv('GITHUB_SHA'),
+              'review': review_results,
+              'action': 'generate_tests'
+          }
+          
+          headers = {
+              'Authorization': f'Bearer {os.getenv("API_KEY")}',
+              'Content-Type': 'application/json'
+          }
+          
+          response = requests.post(
+              os.getenv('API_ENDPOINT'),
+              json=payload,
+              headers=headers
+          )
+          
+          if response.status_code != 200:
+              raise Exception(f"Test generation API request failed: {response.text}")
+          
+          test_results = response.json()
+          print("Generated tests:", test_results)
+          
+          # Сохраняем сгенерированные тесты
+          with open('generated_tests.json', 'w') as f:
+              json.dump(test_results, f)
+
+      - name: Upload test files and create PR
+        id: upload_tests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          import os
+          import json
+          from github import Github
+          
+          # Читаем сгенерированные тесты
+          with open('generated_tests.json', 'r') as f:
+              test_results = json.load(f)
+          
+          if not test_results.get('tests'):
+              print("No tests were generated.")
+              exit(0)
+          
+          # Создаем новую ветку для тестов
+          g = Github(os.getenv('GITHUB_TOKEN'))
+          repo = g.get_repo(os.getenv('GITHUB_REPOSITORY'))
+          base_branch = os.getenv('GITHUB_REF').split('/')[-1]
+          new_branch = f"tests/{os.getenv('GITHUB_SHA')[:6]}"
+          
+          # Получаем ссылку на базовую ветку
+          sb = repo.get_branch(base_branch)
+          repo.create_git_ref(ref=f'refs/heads/{new_branch}', sha=sb.commit.sha)
+          
+          # Создаем или обновляем файлы тестов
+          for test_file in test_results['tests']:
+              try:
+                  # Пытаемся получить существующий файл
+                  contents = repo.get_contents(test_file['path'], ref=new_branch)
+                  repo.update_file(
+                      path=test_file['path'],
+                      message=f"Update tests for {test_file['for']}",
+                      content=test_file['content'],
+                      sha=contents.sha,
+                      branch=new_branch
+                  )
+              except:
+                  # Файл не существует, создаем новый
+                  repo.create_file(
+                      path=test_file['path'],
+                      message=f"Add tests for {test_file['for']}",
+                      content=test_file['content'],
+                      branch=new_branch
+                  )
+          
+          # Создаем PR с тестами
+          pr = repo.create_pull(
+              title=f"Generated tests for {os.getenv('GITHUB_SHA')[:6]}",
+              body="This PR contains automatically generated tests based on the recent code changes.",
+              head=new_branch,
+              base=base_branch
+          )
+          
+          print(f"Created PR: {pr.html_url}")
