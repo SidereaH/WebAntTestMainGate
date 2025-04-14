@@ -47,3 +47,7 @@ swagger-to-gherkin:
 git-analysis:
   service:
     url: http://localhost:8083/analyze
+image-to-gherkin:
+  service:
+    url: http://localhost:8001/generate-gherkin
+

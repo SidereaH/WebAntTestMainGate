@@ -34,19 +34,19 @@ services:
 #      - postgres
 #    restart: unless-stopped
 
-  main_gate:
-    #    image: aliquamsiderea/homerep_auth
-    container_name: auth_container
-    build: .
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_webant:5432/postgres_container_webant
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
-      - HOMEREP_SECRET=yo78$$dontCrackPleaseASdujisdufasbasufyghjk
-      - HOMEREP_LIFETIME=600000
-      - SERVER_ADDRESS=0.0.0.0
-      - SERVER_PORT=8081
+#  main_gate:
+#    #    image: aliquamsiderea/homerep_auth
+#    container_name: auth_container
+#    build: .
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container_webant:5432/postgres_container_webant
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+#      - HOMEREP_SECRET=yo78$$dontCrackPleaseASdujisdufasbasufyghjk
+#      - HOMEREP_LIFETIME=600000
+#      - SERVER_ADDRESS=0.0.0.0
+#      - SERVER_PORT=8081
 
 
 

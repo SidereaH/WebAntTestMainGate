@@ -1,0 +1,977 @@
+{
+	"info": {
+		"_postman_id": "052df19c-4c7a-4f5a-9eaf-d8dd415833e5",
+		"name": "WebAnt MainGate API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34405058",
+		"_collection_link": "https://govnoapiteam.postman.co/workspace/GovnoApiTeam-Workspace~105a4b5d-6fbb-4cb3-85c7-ae52770cca47/collection/34405058-052df19c-4c7a-4f5a-9eaf-d8dd415833e5?action=share&source=collection_link&creator=34405058"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"habuma\",\n  \"email\": \"test@example.com\",\n  \"phone\": \"+1234567890\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"habuma\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/signin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "Requires refresh token in Authorization header"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "whoami",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/whoami?jwt=eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzAwNTQsImV4cCI6MTc0NDgzMDA1NH0.ykEq15iscXaFuKmvTR5MK3EJcLWPbi1Vz7vtIs-zgqi7bd3oFENuy_X-EWTtUQi2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"whoami"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzAwNTQsImV4cCI6MTc0NDgzMDA1NH0.ykEq15iscXaFuKmvTR5MK3EJcLWPbi1Vz7vtIs-zgqi7bd3oFENuy_X-EWTtUQi2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Create Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzAwNTQsImV4cCI6MTc0NDgzMDA1NH0.ykEq15iscXaFuKmvTR5MK3EJcLWPbi1Vz7vtIs-zgqi7bd3oFENuy_X-EWTtUQi2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"New Project\",\n  \"description\": \"Project description\",\n  \"githubUrl\": \"https://github.com/example/project\",\n  \"owner\": {\n    \"username\": \"habuma\"\n  }\n\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzE1MDMsImV4cCI6MTc0NDgzMTUwM30.QXnACa7S2hdi0XxR9DDnLN9ipQ267Vs5wUQoyOhDUbWozXDmgEKPlC1o_CDGdXjW",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/projects?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Member to Project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/projects/1/members/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"1",
+								"members",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AutoTests",
+			"item": [
+				{
+					"name": "Create AutoTest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Login Test\",\n  \"description\": \"Test for login functionality\",\n  \"testCode\": \"// Test code here\",\n  \"framework\": \"SELENIUM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auto-tests",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auto-tests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AutoTest by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auto-tests/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auto-tests",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TestCases",
+			"item": [
+				{
+					"name": "Create TestCase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzE1MDMsImV4cCI6MTc0NDgzMTUwM30.QXnACa7S2hdi0XxR9DDnLN9ipQ267Vs5wUQoyOhDUbWozXDmgEKPlC1o_CDGdXjW",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Login Test Case\",\n  \"description\": \"Verify user can login\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/test-cases",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"test-cases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get TestCases by Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzM5NTYsImV4cCI6MTc0NDgzMzk1Nn0.O7ggcD_aI7BRPIHMbf5IxWz8JjML24upuXd6NMFwnIpPVIQAoPjAVLmubw0xCPhm",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/test-cases/project/1?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"test-cases",
+								"project",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Create Test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzI1MDEsImV4cCI6MTc0NDgzMjUwMX0.sZJMRi2SSAlgvnNxFweURDXhCLX4ThBw29lTwUlStG21N6eoLywSe2R1RWaoFeO1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Login Test\",\n  \"description\": \"Test login functionality\",\n  \"testCase\": {\n    \"name\": \"Login Test Case\",\n    \"description\": \"Verify user can login\",\n    \"gherkinCode\": null\n  },\n  \"autoTest\": {\n    \"name\":\"Login Test Code\"\n\n  }\n\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/tests?projectId=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tests"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tests by Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzM3MjYsImV4cCI6MTc0NDgzMzcyNn0.Z8wcbG5U8fGcJbKoVnjucf99aAVuY3pt3Fu9D_jc5oKkS1xGGxuOxjwyKmeXTLjF",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/tests/project/1?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tests",
+								"project",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TestRuns",
+			"item": [
+				{
+					"name": "Create TestRun",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"testId\": 1,\n  \"status\": \"PENDING\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/test-runs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"test-runs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update TestRun Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/test-runs/1/status?status=PASSED",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"test-runs",
+								"1",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PASSED"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"updateduser\",\n  \"email\": \"updated@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Microservices",
+			"item": [
+				{
+					"name": "Swagger to Gherkin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"repoUrl\": \"https://github.com/example/swagger.yaml\",\n  \"filePath\": \"swagger.yaml\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/swagger/generate-gherkin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"swagger",
+								"generate-gherkin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Git Analysis",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"repoUrl\": \"https://github.com/example/repo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/git-analysis/analyze",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"git-analysis",
+								"analyze"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gateway Copy",
+			"item": [
+				{
+					"name": "swagtogherkin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzUzOTgsImV4cCI6MTc0NDgzNTM5OH0.pwMk1C3XV9Inf17e1jJX5rNXFjG_cKhGyXobGw0cUW-R5L50JMyDqG4wVXrffagj",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"svo\",\n    \"description\": \"ponyal\",\n    \"projectId\": 1,\n    \n    \"repoUrl\": \"https://github.com/SidereaH/WebAntSwaggerExample/blob/main/swaggerexmp.yaml\",\n    \"filePath\": \"examples/swaggerexmp.yaml\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/swagger/generate-gherkin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"swagger",
+								"generate-gherkin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "analyze_repo Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzYwNjUsImV4cCI6MTc0NDgzNjA2NX0.1CHNQ33posdfJO_H_4dsllmX7BnxDeq9W1zh7gWd8X4Pj-2ONXV65JgUl70NT7G4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"name\": \"python-viselica\",\n    \"description\": \"project\",\n    \"projectId\": 1,\n    \n    \"repoUrl\": \"https://github.com/SidereaH/python-Viselica\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/git-analysis/analyze",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"git-analysis",
+								"analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imgtext to gherkin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWJ1bWEiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDQ1MzUzOTgsImV4cCI6MTc0NDgzNTM5OH0.pwMk1C3XV9Inf17e1jJX5rNXFjG_cKhGyXobGw0cUW-R5L50JMyDqG4wVXrffagj",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"projectId\": 1,\n   \"description\": \"Пользователь вводит логин и пароль на странице авторизации\",\n  \"base64_image\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigD//2Q==\",\n  \"image_type\": \"image/jpg\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/image_gherkin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"image_gherkin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gengherkfromgithubfile Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"repoUrl\": \"https://github.com/SidereaH/WebAntSwaggerExample/blob/main/swaggerexmp.yaml\",\r\n    \"filePath\": \"examples/swaggerexmp.yaml\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/generate-gherkin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"generate-gherkin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get conf Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "analyze_repo Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"repo_url\": \"https://github.com/SidereaH/python-Viselica\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/analyze",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"analyze"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "imagetoghercin Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"description\": \"Пользователь вводит логин и пароль на странице авторизации\",\n  \"base64_image\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigD//2Q==\",\n  \"image_type\": \"image/jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/generate-gherkin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"generate-gherkin"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8081"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"disabled": true
+		}
+	]
+}

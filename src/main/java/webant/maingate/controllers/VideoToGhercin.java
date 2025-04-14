@@ -19,7 +19,7 @@ public class VideoToGhercin {
 
 
 
-        private final String VIDEO_ANALYSIS_SERVICE_URL = "http://video-analysis-service:8080";
+        private final String VIDEO_ANALYSIS_SERVICE_URL = "http://localhost:8084";
         private final RestTemplate restTemplate;
     private final TestService testService;
 
